@@ -1,9 +1,11 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * I need to finish imageConvert, as well as the rundown
  */
+//rundown of events
 
+let results, totalMoney, totalWinnings, totalSpent;
+let pictures = [], slotBase = [];
+document.getElementById("placeBet").addEventListener("click", );
 
 //functions list
 
