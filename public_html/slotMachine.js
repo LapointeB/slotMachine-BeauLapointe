@@ -3,6 +3,7 @@
  */
 //rundown of events
 
+/* global results, totalMoney, totalWinnings, totalSpent, pictures, slotBase */
 let results, totalMoney, totalWinnings, totalSpent;
 let pictures = [], slotBase = [];
 document.getElementById("placeBet").addEventListener("click", );
