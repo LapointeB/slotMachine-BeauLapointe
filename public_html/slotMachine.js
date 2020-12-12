@@ -1,67 +1,97 @@
 /* 
- * I need to finish imageConvert, as well as the rundown
+ * I need to finish imageConvert
  */
-//rundown of events
 
-/* global results, totalMoney, totalWinnings, totalSpent, pictures, slotBase */
-let results, totalMoney, totalWinnings, totalSpent;
+/* global results, global totalMoney, global totalWinnings, global totalSpent, global pictures, global slotBase */
+let results = 0, totalMoney = 0, totalWinnings = 0, totalSpent = 0;
 let pictures = [], slotBase = [];
-document.getElementById("placeBet").addEventListener("click", );
+document.getElementById("placeBet").addEventListener("click",runSlots);
+document.getElementById("dropOut").addEventListener("click",getOut);
+document.getElementById("addFunds").addEventListener("click",moneyAdding);
 
 //functions list
 
 //runs the slot machine and determines the amount gained or lost
-function runSlots(amountBet, amountTotal, slotResults) {
-    if (amountBet > amountTotal) {
-        Alert("Place a lower bet or add more money to your account.");
+function runSlots() {
+    randomSlots();
+    results = parseInt(document.getElementById("betAmount").value);
+    if (results > totalMoney) {
+        alert("Place a lower bet or add more money to your account.");
     }
     else {
-        if (slotResults[0] === slotResults[1] && slotResults[1] === slotResults[2]) {
-            amountBet *= 3;
+        if (slotBase[0] === slotBase[1] && slotBase[1] === slotBase[2]) {
+            results *= 3;
         }
         //else if any two results match
-        else if (slotResults[0] === slotResults[1] || slotResults[0] === slotResults[2] || slotResults[1] === slotResults[2]) {
-            amountBet *= 2;
+        else if (slotBase[0] === slotBase[1] || slotBase[0] === slotBase[2] || slotBase[1] === slotBase[2]) {
+            results *= 2;
         }
         else {
-            amountBet *= -1;
+            results *= -1;
         }
-        return amountBet;
+        applyResults();
     }
+    slotBase = [];
+    changeVars();
 }
 
 //find the slot results
 function randomSlots() {
-    let slotArray = [];
     let randomNumber = 0;
     for (i = 0; i < 3; i++) {
         randomNumber = Math.ceil(Math.random() * 6);
         if (randomNumber === 1) {
-            slotArray.push("bar");
+            slotBase.push("bar");
         } else if (randomNumber === 2) {
-            slotArray.push("bell");
+            slotBase.push("bell");
         } else if (randomNumber === 3) {
-            slotArray.push("cherries");
+            slotBase.push("cherries");
         } else if (randomNumber === 4) {
-            slotArray.push("melon");
+            slotBase.push("melon");
         } else if (randomNumber === 5) {
-            slotArray.push("orange");
+            slotBase.push("orange");
         } else {
-            slotArray.push("plum");
+            slotBase.push("plum");
         }
     }
-    return slotArray;
+}
+
+//applys results to totals
+function applyResults() {
+    totalMoney+= results;
+    if (results < 0) {
+        totalSpent -= results;
+    }
+    else {
+        totalWinnings += results;
+    }
 }
 
 //converts the slot results into images
-function imageConvert(slots) {
+function imageConvert() {
     
 }
 
 //adds more money into your total money
-function moneyAdding(currentMoney) {
-    let addMoney = prompt("How much money are you adding? ");
-    currentMoney += addMoney;
-    return currentMoney;
+function moneyAdding() {
+    let addMoney = Number(prompt("How much money are you adding? "));
+    totalMoney += addMoney;
+    changeVars();
+}
+
+//drops player out of the game
+function getOut() {
+    alert("You left with $" + totalMoney + ". You won $" + totalWinnings + ". You spent $" + totalSpent);
+    totalMoney = 0;
+    totalWinnings = 0;
+    totalSpent = 0;
+    changeVars();
+}
+
+//gives the proper values to the index file
+function changeVars() {
+    document.getElementById("totalMoney").innerHTML = totalMoney;
+    document.getElementById("totalWinnings").innerHTML = totalWinnings;
+    document.getElementById("totalSpent").innerHTML = totalSpent;
 }
 
