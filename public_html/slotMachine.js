@@ -30,6 +30,7 @@ function runSlots() {
             results *= -1;
         }
         applyResults();
+        resultsDisp();
     }
     slotBase = [];
     changeVars();
@@ -67,11 +68,6 @@ function applyResults() {
     }
 }
 
-//converts the slot results into images
-function imageConvert() {
-    
-}
-
 //adds more money into your total money
 function moneyAdding() {
     let addMoney = Number(prompt("How much money are you adding? "));
@@ -86,6 +82,17 @@ function getOut() {
     totalWinnings = 0;
     totalSpent = 0;
     changeVars();
+}
+
+//displays the results of the slot machine
+function resultsDisp() {
+    document.getElementById("slots").innerHTML = (slotBase[0] + " | " + slotBase[1] + " | " + slotBase[2]);
+    if (results >= 0) {
+        document.getElementById("winLose").innerHTML = "You win!";
+    }
+    else {
+        document.getElementById("winLose").innerHTML = "You lose!";
+    }
 }
 
 //gives the proper values to the index file
